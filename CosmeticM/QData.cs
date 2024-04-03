@@ -8,7 +8,7 @@ namespace CosmeticM
 {
     public class QData
     {
-        public DateTime date { get; set; } // PK
+        public DateTime date { get; set; }
         public double weight { get; set; }
         public double water { get; set; }
         public double material { get; set; }
