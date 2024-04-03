@@ -14,7 +14,6 @@ namespace CosmeticM
     {
         public Form2()
         {
-            Form1.
             InitializeComponent();
         }
     }

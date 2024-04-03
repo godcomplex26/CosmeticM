@@ -14,10 +14,10 @@ namespace CosmeticM
         [STAThread]
         static void Main()
         {
-            Console.WriteLine(Utils.sqlQueryConverter("ReactA_Temp>25;ReactB_Temp>19;ReactC_Temp>20"));
+            Console.WriteLine(Utils.sqlQueryConverter("BETWEEN(ReactA_Temp,24.5,25)"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1()); &**&
+            Application.Run(new Form1());
         }
     }
 }

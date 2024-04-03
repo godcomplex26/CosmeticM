@@ -12,7 +12,7 @@ namespace CosmeticM
         public static string sqlQueryConverter(string text)
         {
             string query = "";
-            string pattern = @"BETWEEN\((.+?),(.+?)\)";
+            string pattern = @"BETWEEN\((.+?),(.+?),(.+?)\)";
 
             char[] separators = { ';' };
 
