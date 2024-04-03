@@ -17,9 +17,13 @@ namespace CosmeticM
 
         protected abstract void ConnectDB();
 
-        public abstract void DoQueryR(string c1 = "-1", string c2 = "-1", string c3 = "-1"); // select 용
+        public abstract void DoQueryRP(string sql = "-1"); // PData select 용
+        public abstract void DoQueryRQ(string sql = "-1"); // QData select 용
 
-        public abstract void DoQueryC(PData data); // insert용
-        public abstract void DoQueryD(PData data); // delete 용
+        public abstract void DoQueryCP(PData data); // PData insert용
+        public abstract void DoQueryCQ(QData data); // QData insert용
+
+        public abstract void DoQueryDP(PData data); // PData delete 용
+        public abstract void DoQueryDQ(QData data); // QData delete 용
     }
 }

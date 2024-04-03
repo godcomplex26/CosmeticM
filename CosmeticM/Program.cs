@@ -14,7 +14,6 @@ namespace CosmeticM
         [STAThread]
         static void Main()
         {
-            Console.WriteLine(Utils.sqlQueryConverter("BETWEEN(ReactA_Temp,24.5,25)"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

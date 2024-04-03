@@ -36,30 +36,22 @@ namespace CosmeticM
 
         // DoQueryR() // 추가 조건 설정 없으면, ps 값은 자동으로 "-1"을 대입
         // select 전체 or 특정 데이터 정보
-        public override void DoQueryR(string c1 = "-1", string c2 = "-1", string c3 = "-1")
+        // 데이터 불러오기 PData
+        public override void DoQueryRP(string sql = "-1")
         {
-            string query = Utils.sqlQueryConverter(c1);
             try
             {
                 ConnectDB();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                // c1.IndexOf("#")
-                if (c1.Equals("-1")) // 추가 조건 없는 경우
+
+                if (sql.Equals("-1")) // 추가 조건 없는 경우
                 {
                     cmd.CommandText = "select * from Process_Data";
                 }
-                else if (c2.Equals("-1")) // 추가 조건 1개인 경우
+                else
                 {
-                    cmd.CommandText = "select * from Process_Data where " + query; // sql로 직접 검색
-                }
-                else if (c3.Equals("-1")) // 추가 조건 2개인 경우
-                {
-                    cmd.CommandText = "select * from Process_Data where " + c1 + " and " + c2; // sql로 직접 검색
-                }
-                else // 추가 조건 3개인 경우
-                {
-                    cmd.CommandText = "select * from Process_Data where " + c1 + " and " + c2 + " and " + c3; // sql로 직접 검색
+                    cmd.CommandText = "select * from Process_Data where " + sql; // sql로 직접 검색
                 }
 
                 da = new SqlDataAdapter(cmd);
@@ -78,8 +70,42 @@ namespace CosmeticM
             }
         }
 
-        // 데이터 추가
-        public override void DoQueryC(PData data)
+        // 데이터 불러오기 QData
+        public override void DoQueryRQ(string sql = "-1")
+        {
+            try
+            {
+                ConnectDB();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+
+                if (sql.Equals("-1")) // 추가 조건 없는 경우
+                {
+                    cmd.CommandText = "select * from QC_Data";
+                }
+                else
+                {
+                    cmd.CommandText = "select * from QC_Data where " + sql; // sql로 직접 검색
+                }
+
+                da = new SqlDataAdapter(cmd);
+                ds = new DataSet();
+                da.Fill(ds, "QC_Data");
+                dt = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                DataManager.PrintLog(ex.Message);
+                DataManager.PrintLog(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        // 데이터 추가 PData
+        public override void DoQueryCP(PData data)
         {
             try
             {
@@ -118,8 +144,40 @@ namespace CosmeticM
             }
         }
 
-        // 데이터 삭제
-        public override void DoQueryD(PData data)
+        // 데이터 추가 QData
+        public override void DoQueryCQ(QData data)
+        {
+            try
+            {
+                ConnectDB();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                string sql = "";
+                sql = "insert into QC_Data values (@datetime, @weight, @water, @material, @HSO, @pH);";
+                cmd.Parameters.AddWithValue("@date", data.date);
+                cmd.Parameters.AddWithValue("@weight", data.weight);
+                cmd.Parameters.AddWithValue("@date", data.water);
+                cmd.Parameters.AddWithValue("@material", data.material);
+                cmd.Parameters.AddWithValue("@HSO", data.HSO);
+                cmd.Parameters.AddWithValue("@pH", data.pH);
+
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                DataManager.PrintLog(ex.Message);
+                DataManager.PrintLog(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        // 데이터 삭제 PData
+        public override void DoQueryDP(PData data)
         {
             try
             {
@@ -129,6 +187,33 @@ namespace CosmeticM
                 string sql = "";
                 sql = "delete from Process_Data where datetime=@datetime;";
                 cmd.Parameters.Add("@datetime", SqlDbType.DateTime2).Value = data.datetime;
+
+                cmd.CommandText = sql;
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                DataManager.PrintLog(ex.Message);
+                DataManager.PrintLog(ex.StackTrace);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        // 데이터 삭제 QData
+        public override void DoQueryDQ(QData data)
+        {
+            try
+            {
+                ConnectDB();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                string sql = "";
+                sql = "delete from QC_Data where date=@date;";
+                cmd.Parameters.Add("@date", SqlDbType.DateTime2).Value = data.date;
 
                 cmd.CommandText = sql;
                 cmd.ExecuteNonQuery();
