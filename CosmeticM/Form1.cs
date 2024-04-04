@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Audio.OpenAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,10 +7,12 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
 
 namespace CosmeticM
 {
@@ -101,9 +104,10 @@ namespace CosmeticM
                 }
         */
         // 조건 초기화
+        private List<string> conditions = new List<string>();
         public void resetCon()
         {
-            textBox1.Text = "";
+            Utils.reScreen(dataGridView1, dataGridView2);
             MessageBox.Show("조건이 초기화되었습니다.");
         }
 
@@ -116,22 +120,45 @@ namespace CosmeticM
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // 가운데 정렬
             */
 
-            label1.Text = "현재 선택 : ";
+            // label1.Text = "현재 선택 : ";
             Utils.reScreen(dataGridView1, dataGridView2);
+
+            listBox1.Items.AddRange(Utils.pdata);
+            listBox1.Items.AddRange(Utils.qdata);
+            listBox2.Items.AddRange(Utils.operators);
+
         }
 
-        // 데이터 조회
+        // PData 데이터 조회
         private void button1_Click(object sender, EventArgs e)
         {
             string sql;
-            sql = Utils.sqlQueryConverter(textBox1.Text);
 
-            if (textBox1.Text.Trim().Equals(""))
+            finalQueryGen();
+
+            sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
+
+            if (conditions.Count == 0)
             {
                 sql = "-1";
             }
 
             Utils.reScreen(dataGridView1, "PData", sql);
+        }
+
+        // QData 데이터 조회
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string sql;
+            finalQueryGen();
+            sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
+
+            if (conditions.Count == 0)
+            {
+                sql = "-1";
+            }
+
+            Utils.reScreen(dataGridView2, "QData", sql);
         }
         /*
                 // 셀 선택 시 할당되는 값
@@ -211,29 +238,197 @@ namespace CosmeticM
             button1_Click(sender, e);
         }
 
+        // 공정 데이터 관리
         private void ToolStrip1_Click(object sender, EventArgs e)
         {
             new Form2().ShowDialog();
+            Utils.reScreen(dataGridView1, "PData");
         }
 
+        // QC 데이터 관리
         private void ToolStrip2_Click(object sender, EventArgs e)
         {
             new Form3().ShowDialog();
+            Utils.reScreen(dataGridView2, "QData");
         }
 
+
+        // 공정 데이터 차트
         private void ToolStrip3_Click(object sender, EventArgs e)
         {
             new Form4().ShowDialog();
         }
 
+        // QC 데이터 차트
         private void ToolStrip4_Click(object sender, EventArgs e)
         {
             new Form5().ShowDialog();
         }
 
+        // 메인
         private void ToolStrip0_Click(object sender, EventArgs e)
         {
+            Utils.reScreen(dataGridView1, dataGridView2);
+        }
 
+        //private void listBox1_DoubleClick(object sender, EventArgs e)
+        //{
+        //    if (listBox1.SelectedItem != null)
+        //    {
+        //        string selectedItem = listBox1.SelectedItem.ToString();
+        //        // 선택된 아이템을 사용하여 원하는 동작 수행
+        //        //textBox1.Text += selectedItem;
+
+        //        int cursorPosition = textBox3.SelectionStart;
+        //        textBox3.Text = textBox3.Text.Insert(cursorPosition, selectedItem);
+        //        textBox3.SelectionStart = cursorPosition + selectedItem.Length;
+        //        textBox3.Focus();
+        //    }
+        //}
+
+        //private void listBox2_DoubleClick(object sender, EventArgs e)
+        //{
+        //    if (listBox2.SelectedItem != null)
+        //    {
+        //        string selectedItem = listBox2.SelectedItem.ToString();
+        //        // 선택된 아이템을 사용하여 원하는 동작 수행
+        //        //textBox1.Text += selectedItem;
+
+        //        int cursorPosition = textBox3.SelectionStart;
+        //        textBox3.Text = textBox3.Text.Insert(cursorPosition, selectedItem);
+        //        textBox3.SelectionStart = cursorPosition + selectedItem.Length;
+        //        textBox3.Focus();
+        //    }
+        //}
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string column = listBox1.SelectedItem.ToString();
+            string op = listBox2.SelectedItem.ToString();
+            string val = textBox4.Text;
+            
+            if (op.Equals("LIKE"))
+                val += "%";
+            if (column.Equals("datetime") || column.Equals("date"))
+                val = $"'{val}'";
+                
+            string condition = $"{column} {op} {val}";
+            if (IsValidWhereClause(condition))
+            {
+                if (conditions.Count != 0)
+                {
+                    if (conditions.Last().ToString().Equals("AND") || conditions.Last().ToString().Equals("OR"))
+                    {
+                        conditions.Add(condition);
+                    }
+                    else
+                    {
+                        conditions.Add("AND");
+                        conditions.Add(condition);
+                    }
+                }
+                else
+                {
+                    conditions.Add(condition);
+                }
+            }
+            else
+            {
+                MessageBox.Show("조건 구성이 올바르지 않습니다.");
+            }
+            textBox4.Clear();
+            condListRefresher();
+        }
+
+        public bool IsValidWhereClause(string whereClause)
+        {
+            string pattern = @"^(?:\s*\w+\s*(?:=|<>|>|<|>=|<=|LIKE|BETWEEN)\s*(?:'[^']*'|[\w\d%_\-\.]+(?:\.\d+)?)(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?\s*(?:AND|OR)?\s*)*$";
+            return Regex.IsMatch(whereClause, pattern, RegexOptions.IgnoreCase);
+        }
+
+        private void condListRefresher()
+        {
+            listBox3.Items.Clear();
+            listBox3.Items.AddRange(conditions.ToArray());
+        }
+
+        private void listBox3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (listBox3.SelectedItem != null)
+                {
+                    string selectedItem = listBox3.SelectedItem.ToString();
+                    conditions.Remove(selectedItem);
+                    condListRefresher();
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e) // AND
+        {
+            if (conditions.Count != 0)
+                conditions.Add("AND");
+            condListRefresher();
+        }
+
+        private void button7_Click(object sender, EventArgs e) // OR
+        {
+            if (conditions.Count != 0)
+                conditions.Add("OR");
+            condListRefresher();
+        }
+
+        private void button3_Click(object sender, EventArgs e) // 날짜 입력
+        {
+            Point buttonLocation = button6.PointToScreen(Point.Empty);
+
+            // MonthCalendar 컨트롤 생성
+            MonthCalendar calendar = new MonthCalendar();
+
+            // MonthCalendar의 속성 설정
+            calendar.Location = new Point(buttonLocation.X, buttonLocation.Y + button1.Height);
+            calendar.ShowToday = true;
+            calendar.ShowTodayCircle = true;
+
+            // MonthCalendar의 DateSelected 이벤트 처리
+            calendar.DateSelected += (s, args) =>
+            {
+                // 선택한 날짜를 yyyy-MM-dd 형식으로 가져오기
+                string selectedDate = args.Start.ToString("yyyy-MM-dd");
+
+                // 선택한 날짜를 TextBox에 추가
+                textBox4.Text = selectedDate;
+
+                // MonthCalendar 제거
+                this.Controls.Remove(calendar);
+            };
+
+            // MonthCalendar를 폼에 추가
+            this.Controls.Add(calendar);
+
+            // MonthCalendar를 맨 위로 가져오기
+            calendar.BringToFront();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            conditions.Clear();
+            condListRefresher();
+        }
+
+        private void finalQueryGen()
+        {
+            int len = conditions.Count();
+            
+            if (len != 0)
+            {
+                if (conditions[len - 1].Equals("AND") || conditions[len - 1].Equals("OR"))
+                {
+                    conditions.RemoveAt(len - 1);
+                }
+            }
+            condListRefresher();
         }
     }
 }

@@ -172,5 +172,21 @@ namespace CosmeticM
         {
             return $"{q} BETWEEN {a} AND {b}";
         }
+
+        static void addQuery()
+        {
+
+        }
+
+        static string queryWizard(string text)
+        {
+            string query = "";
+            return query;
+        }
+
+        public static string[] pdata = new string[] { "datetime", "ReactA_Temp", "ReactB_Temp", "ReactC_Temp", "ReactD_Temp", "ReactE_Temp", "ReactF_Temp", "ReactF_PH", "Power", "CurrentA", "CurrentB", "CurrentC" };
+        public static string[] qdata = new string[] { "date", "weight", "water", "material", "HSO", "pH" };
+        public static string[] operators = new string[] { "=", "LIKE", ">", ">=", "<", "<=", "AND", "OR" };
+        
     }
 }

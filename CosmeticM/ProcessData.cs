@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CosmeticM
 {
@@ -23,4 +24,6 @@ namespace CosmeticM
         public double CurrentC { get; set; }
 
     }
+
+    
 }
