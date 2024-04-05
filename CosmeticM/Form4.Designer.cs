@@ -34,7 +34,6 @@
             this.plotView4 = new OxyPlot.WindowsForms.PlotView();
             this.plotView5 = new OxyPlot.WindowsForms.PlotView();
             this.plotView6 = new OxyPlot.WindowsForms.PlotView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button8 = new System.Windows.Forms.Button();
@@ -121,13 +120,6 @@
             this.plotView6.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.plotView6.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(607, 112);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 6;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(713, 112);
@@ -184,6 +176,7 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(165, 52);
             this.listBox3.TabIndex = 21;
+            this.listBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox3_KeyDown);
             // 
             // button6
             // 
@@ -247,7 +240,6 @@
             this.ClientSize = new System.Drawing.Size(800, 598);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.plotView6);
             this.Controls.Add(this.plotView5);
             this.Controls.Add(this.plotView4);
@@ -259,7 +251,6 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -270,7 +261,6 @@
         private OxyPlot.WindowsForms.PlotView plotView4;
         private OxyPlot.WindowsForms.PlotView plotView5;
         private OxyPlot.WindowsForms.PlotView plotView6;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button button8;

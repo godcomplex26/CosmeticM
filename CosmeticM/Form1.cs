@@ -18,6 +18,8 @@ namespace CosmeticM
 {
     public partial class Form1 : Form
     {
+        MonthCalendar calendar1 = new MonthCalendar();
+        
         /*        
                  // 데이터 표시 포맷, 시간은 초까지, 소수점은 두 자리까지
                 public void Format()
@@ -382,12 +384,14 @@ namespace CosmeticM
         private void button3_Click(object sender, EventArgs e) // 날짜 입력
         {
             Point buttonLocation = button6.PointToScreen(Point.Empty);
+            int x = buttonLocation.X;
+            int y = buttonLocation.Y;
 
             // MonthCalendar 컨트롤 생성
             MonthCalendar calendar = new MonthCalendar();
 
             // MonthCalendar의 속성 설정
-            calendar.Location = new Point(buttonLocation.X, buttonLocation.Y + button1.Height);
+            calendar.Location = new Point(buttonLocation.X, buttonLocation.Y);
             calendar.ShowToday = true;
             calendar.ShowTodayCircle = true;
 
