@@ -1,137 +1,59 @@
-﻿using OpenTK.Audio.OpenAL;
+﻿using CosmeticM;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
 
 namespace CosmeticM
 {
     public partial class Form1 : Form
     {
-        
-        /*        
-                 // 데이터 표시 포맷, 시간은 초까지, 소수점은 두 자리까지
-                public void Format()
-                {
-                    dataGridView1.Columns["datetime"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
-                    dataGridView2.Columns["date"].DefaultCellStyle.Format = "yyyy-MM-dd HH:mm:ss";
+        public static int digit = 3;
+        private List<string> conditions = new List<string>();
 
-                    // gridview1 소수점 이하 두 자리까지만 표시되도록 설정
-                    string[] columns = { "ReactA_Temp", "ReactB_Temp", "ReactC_Temp", "ReactD_Temp", "ReactE_Temp",
-                    "ReactF_Temp", "ReactF_PH", "Power", "CurrentA", "CurrentB","CurrentC"};
-                    for (int i = 0; i < columns.Length; i++)
-                    {
-                        dataGridView1.Columns[columns[i]].DefaultCellStyle.Format = "N2";
-                    }
-
-                    // gridview2 소수점 이하 두 자리까지만 표시되도록 설정
-                    string[] columns2 = { "weight", "water", "material", "HSO", "pH"};
-                    for (int i = 0; i < columns2.Length; i++)
-                    {
-                        dataGridView2.Columns[columns2[i]].DefaultCellStyle.Format = "N2";
-                    }
-
-                    *//*
-                    // 소수점 이하 두 자리까지만 표시되도록 설정
-                    dataGridView1.Columns["ReactA_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactB_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactC_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactD_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactE_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactF_Temp"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["ReactF_PH"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["Power"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["CurrentA"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["CurrentB"].DefaultCellStyle.Format = "N2";
-                    dataGridView1.Columns["CurrentC"].DefaultCellStyle.Format = "N2";
-                    *//*
-                }*/
-        /*
-                // 화면 리프레시
-                public void reScreen()
-                {   
-                    dataGridView1.DataSource = null;
-                    dataGridView2.DataSource = null;
-                    DataManager.Load();
-                    if (DataManager.datas.Count > 0)
-                    {
-                        dataGridView1.DataSource = DataManager.datas;
-                        dataGridView2.DataSource = DataManager.datas2;
-                        Format();
-                    }
-                }
-
-                public void reScreen(string c1, string c2, string c3)
-                {
-                    dataGridView1.DataSource = null;
-                    DataManager.Load(c1, c2, c3);
-                    if (DataManager.datas.Count > 0)
-                    {
-                        dataGridView1.DataSource = DataManager.datas;
-                        Format();
-                    }
-                }
-        */
-        /*
-                // 랜덤 데이터 생성
-                public PData makeRandom()
-                {  Random rn = new Random();
-
-                    PData data = new PData();
-                    data.datetime = DateTime.Now;
-                    data.ReactA_Temp = rn.NextDouble() * (21.0 - 19.0) + 19.0;
-                    data.ReactB_Temp = rn.NextDouble() * (21.0 - 19.0) + 19.0;
-                    data.ReactC_Temp = rn.NextDouble() * (21.0 - 19.0) + 19.0;
-                    data.ReactD_Temp = rn.NextDouble() * (21.0 - 19.0) + 19.0;
-                    data.ReactE_Temp = rn.NextDouble() * (21.0 - 19.0) + 19.0;
-                    data.ReactF_Temp = rn.NextDouble() * (10.0 - 5.0) + 5.0;
-                    data.ReactF_PH = rn.NextDouble() * (2.0 - 1.0) + 1.0;
-                    data.Power = rn.NextDouble() * (1400.0 - 1300.0) + 1300.0;
-                    data.CurrentA = rn.NextDouble() * (0.4 - 0.2) + 0.2;
-                    data.CurrentB = rn.NextDouble() * (1.8 - 1.6) + 1.6;
-                    data.CurrentC = rn.NextDouble() * (1.4 - 1.2) + 1.2;
-
-                    return data;
-                }
-        */
-        // 조건 초기화
         Form7 form7 = new Form7();
-        public void resetCon()
-        {
-            Utils.reScreen(dataGridView1, dataGridView2);
-            MessageBox.Show("조건이 초기화되었습니다.");
-        }
+
+        /*        // 조건 초기화
+                public void resetCon()
+                {
+                    Utils.reScreen(dataGridView1, dataGridView2, digit);
+                    MessageBox.Show("조건이 초기화되었습니다.");
+                }
+        */
 
         public Form1()
         {
             InitializeComponent();
+            
 
             /* 너무 느려져서 기각
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // 열 너비 맞춤
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // 가운데 정렬
             */
+            progressBar1.Style = ProgressBarStyle.Marquee; // Marquee 스타일은 애니메이션 형태의 로딩바입니다.
+            progressBar1.MarqueeAnimationSpeed = 30; // 로딩바의 애니메이션 속도를 조절합니다.
+
+            button20.Text = "←.0\n.00";
+            button30.Text = ".00\n→.0";
+
             ShowForm7AsChildForm();
-            // label1.Text = "현재 선택 : ";
-            Utils.reScreen(dataGridView1, dataGridView2);
 
-            //groupBox1.Controls.Remove(button5);
-            //tabPage1.Text = "PData";
-            //tabPage2.Text = "QData";
+            Utils.reScreen(dataGridView1, dataGridView2, digit, progressBar1);
 
-            //listBox1.Items.AddRange(Utils.pdata);
-            button1.Location = new Point(form7.getLocationX() + 12, form7.getLocationY() + 20);
-
+            //button1.Location = new Point(form7.getLocationX() + 12, form7.getLocationY() + 20);
+            menuStrip1.Focus();
         }
 
         private void ShowForm7AsChildForm()
@@ -141,41 +63,33 @@ namespace CosmeticM
             form7.Dock = DockStyle.Fill;
 
             panel1.Controls.Add(form7);
+            form7.submitButton().Click += button1_Click;
+            form7.setDataType();
             form7.Show();
-            //groupBox2.Size = new Size(form7.getGroupBox().Width, form7.Height);
         }
 
-        // PData 데이터 조회
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    string sql;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("test");
+            if (form7.conditions.Count == 0)
+            {
+                Utils.reScreen(dataGridView1, dataGridView2, digit, progressBar1);
+            }
+            else
+            {
+                form7.finalQueryGen();
+                if (form7.getCurrentTab().Equals("PData"))
+                {
+                    Utils.reScreen(dataGridView1, form7.getCurrentTab(), string.Join(" ", form7.conditions), digit, progressBar1);
+                }
+                else if (form7.getCurrentTab().Equals("QData"))
+                {
+                    Utils.reScreen(dataGridView2, form7.getCurrentTab(), string.Join(" ", form7.conditions), digit, progressBar1);
+                }
+            }
+        }
 
-        //    finalQueryGen();
 
-        //    sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
-
-        //    if (conditions.Count == 0)
-        //    {
-        //        sql = "-1";
-        //    }
-
-        //    Utils.reScreen(dataGridView1, "PData", sql);
-        //}
-
-        // QData 데이터 조회
-        //private void button5_Click(object sender, EventArgs e)
-        //{
-        //    string sql;
-        //    finalQueryGen();
-        //    sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
-
-        //    if (conditions.Count == 0)
-        //    {
-        //        sql = "-1";
-        //    }
-
-        //    Utils.reScreen(dataGridView2, "QData", sql);
-        //}
         /*
                 // 셀 선택 시 할당되는 값
                 string select = "";
@@ -247,25 +161,18 @@ namespace CosmeticM
                 }
         */
 
-        // 조건 초기화
-        //private void button4_Click(object sender, EventArgs e)
-        //{
-        //    resetCon();
-        //    button1_Click(sender, e);
-        //}
-
         // 공정 데이터 관리
         private void ToolStrip1_Click(object sender, EventArgs e)
         {
             new Form2().ShowDialog();
-            Utils.reScreen(dataGridView1, "PData");
+            Utils.reScreen(dataGridView1, "PData", digit, progressBar1);
         }
 
         // QC 데이터 관리
         private void ToolStrip2_Click(object sender, EventArgs e)
         {
             new Form3().ShowDialog();
-            Utils.reScreen(dataGridView2, "QData");
+            Utils.reScreen(dataGridView2, "QData", digit, progressBar1);
         }
 
 
@@ -284,99 +191,82 @@ namespace CosmeticM
         // 메인
         private void ToolStrip0_Click(object sender, EventArgs e)
         {
-            Utils.reScreen(dataGridView1, dataGridView2);
+            Utils.reScreen(dataGridView1, dataGridView2, digit, progressBar1);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // 자릿수 줄이기(최소 1자리 까지)
+        private void button20_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("test");
-            if (form7.conditions.Count == 0)
+            if (digit > 1)
             {
-                Utils.reScreen(dataGridView1, dataGridView2);
+                digit--;
+                Utils.reScreen(dataGridView1, dataGridView2, digit, progressBar1);
             }
             else
             {
-                form7.finalQueryGen();
-                if (form7.getCurrentTab().Equals("PData"))
-                {
-                    Utils.reScreen(dataGridView1, form7.getCurrentTab(), string.Join(" ", form7.conditions));
-                }
-                else if (form7.getCurrentTab().Equals("QData"))
-                {
-                    Utils.reScreen(dataGridView2, form7.getCurrentTab(), string.Join(" ", form7.conditions));
-                }
+                MessageBox.Show("더 이상 줄일 수 없습니다.");
             }
         }
 
-        //private void listBox1_DoubleClick(object sender, EventArgs e)
-        //{
-        //    if (listBox1.SelectedItem != null)
-        //    {
-        //        string selectedItem = listBox1.SelectedItem.ToString();
-        //        // 선택된 아이템을 사용하여 원하는 동작 수행
-        //        //textBox1.Text += selectedItem;
+        // 자릿수 늘리기(최대 9자리 까지)
+        private void button30_Click(object sender, EventArgs e)
+        {
+            if (digit < 9)
+            {
+                digit++;
+                Utils.reScreen(dataGridView1, dataGridView2, digit, progressBar1);
+            }
+            else
+            {
+                MessageBox.Show("더 이상 늘릴 수 없습니다.");
+            }
+        }
 
-        //        int cursorPosition = textBox3.SelectionStart;
-        //        textBox3.Text = textBox3.Text.Insert(cursorPosition, selectedItem);
-        //        textBox3.SelectionStart = cursorPosition + selectedItem.Length;
-        //        textBox3.Focus();
-        //    }
-        //}
+        // 셀 클릭 GridView1
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) // 유효한 셀이 클릭되었는지 확인합니다.
+            {
+                DataGridViewCell clickedCell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                // 클릭된 셀의 정보를 가져옵니다.
+                string value = clickedCell.Value.ToString(); // 셀의 값
+                int rowIdx = e.RowIndex; // 행 인덱스
+                int colIdx = e.ColumnIndex; // 열 인덱스
 
-        //private void listBox2_DoubleClick(object sender, EventArgs e)
-        //{
-        //    if (listBox2.SelectedItem != null)
-        //    {
-        //        string selectedItem = listBox2.SelectedItem.ToString();
-        //        // 선택된 아이템을 사용하여 원하는 동작 수행
-        //        //textBox1.Text += selectedItem;
+                /*
+                // 가져온 정보를 사용하여 원하는 작업을 수행합니다.
+                MessageBox.Show($"클릭된 셀: 행 {rowIdx}, 열 {colIdx}, 값 {value}");
+                */
 
-        //        int cursorPosition = textBox3.SelectionStart;
-        //        textBox3.Text = textBox3.Text.Insert(cursorPosition, selectedItem);
-        //        textBox3.SelectionStart = cursorPosition + selectedItem.Length;
-        //        textBox3.Focus();
-        //    }
-        //}
+                textBox3.Text = value;
+            }
+        }
 
+        // 셀 클릭 GridView2
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0) // 유효한 셀이 클릭되었는지 확인합니다.
+            {
+                DataGridViewCell clickedCell = dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                // 클릭된 셀의 정보를 가져옵니다.
+                string value = clickedCell.Value.ToString(); // 셀의 값
+                int rowIdx = e.RowIndex; // 행 인덱스
+                int colIdx = e.ColumnIndex; // 열 인덱스
 
-        //public bool IsValidWhereClause(string whereClause)
-        //{
-        //    string pattern = @"^(?:\s*\w+\s*(?:=|<>|>|<|>=|<=|LIKE|BETWEEN)\s*(?:'[^']*'|[\w\d%_\-\.]+(?:\.\d+)?)(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?\s*(?:AND|OR)?\s*)*$";
-        //    return Regex.IsMatch(whereClause, pattern, RegexOptions.IgnoreCase);
-        //}
+                /*
+                // 가져온 정보를 사용하여 원하는 작업을 수행합니다.
+                MessageBox.Show($"클릭된 셀: 행 {rowIdx}, 열 {colIdx}, 값 {value}");
+                */
 
-        //private void condListRefresher()
-        //{
-        //    listBox3.Items.Clear();
-        //    listBox3.Items.AddRange(conditions.ToArray());
-        //}
+                textBox3.Text = value;
+            }
+        }
 
-        //private void listBox3_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.KeyCode == Keys.Delete)
-        //    {
-        //        if (listBox3.SelectedItem != null)
-        //        {
-        //            string selectedItem = listBox3.SelectedItem.ToString();
-        //            conditions.Remove(selectedItem);
-        //            condListRefresher();
-        //        }
-        //    }
-        //}
-
-        //private void button6_Click(object sender, EventArgs e) // AND
-        //{
-        //    if (conditions.Count != 0)
-        //        conditions.Add("AND");
-        //    condListRefresher();
-        //}
-
-        //private void button7_Click(object sender, EventArgs e) // OR
-        //{
-        //    if (conditions.Count != 0)
-        //        conditions.Add("OR");
-        //    condListRefresher();
-        //}
-
+        // Form1 종료 시 Form0도 함께 종료
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Form0를 종료합니다.
+            Application.OpenForms["Form0"].Close();
+        }
     }
 }

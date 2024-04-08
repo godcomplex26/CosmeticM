@@ -30,6 +30,9 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button30 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.menuStrip1 = new System.Windows.Forms.ToolStrip();
@@ -39,13 +42,12 @@
             this.ToolStrip3 = new System.Windows.Forms.ToolStripLabel();
             this.ToolStrip4 = new System.Windows.Forms.ToolStripLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -54,8 +56,9 @@
             this.dataGridView1.Location = new System.Drawing.Point(6, 20);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1139, 485);
+            this.dataGridView1.Size = new System.Drawing.Size(1080, 485);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // dataGridView2
             // 
@@ -63,15 +66,43 @@
             this.dataGridView2.Location = new System.Drawing.Point(6, 20);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(1139, 404);
+            this.dataGridView2.Size = new System.Drawing.Size(1080, 404);
             this.dataGridView2.TabIndex = 15;
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(1145, 222);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(191, 21);
+            this.textBox3.TabIndex = 20;
+            // 
+            // button30
+            // 
+            this.button30.Location = new System.Drawing.Point(1280, 170);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(56, 46);
+            this.button30.TabIndex = 19;
+            this.button30.Text = "자리수늘리기";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // button20
+            // 
+            this.button20.Location = new System.Drawing.Point(1218, 170);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(56, 46);
+            this.button20.TabIndex = 18;
+            this.button20.Text = "자리수줄이기";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 201);
+            this.groupBox2.Location = new System.Drawing.Point(12, 150);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1151, 460);
+            this.groupBox2.Size = new System.Drawing.Size(1096, 511);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "공정 데이터";
@@ -81,7 +112,7 @@
             this.groupBox3.Controls.Add(this.dataGridView2);
             this.groupBox3.Location = new System.Drawing.Point(12, 667);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1151, 430);
+            this.groupBox3.Size = new System.Drawing.Size(1096, 430);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "QC 데이터";
@@ -96,7 +127,7 @@
             this.ToolStrip4});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1170, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1531, 25);
             this.menuStrip1.TabIndex = 18;
             this.menuStrip1.Text = "데이터 관리";
             // 
@@ -137,41 +168,43 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1170, 170);
-            this.panel1.TabIndex = 19;
+            this.panel1.Size = new System.Drawing.Size(1531, 119);
+            this.panel1.TabIndex = 22;
             // 
-            // button1
+            // progressBar1
             // 
-            this.button1.Location = new System.Drawing.Point(18, 18);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "조회하기";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.progressBar1.Location = new System.Drawing.Point(1145, 286);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(285, 23);
+            this.progressBar1.TabIndex = 23;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 1061);
+            this.AutoScroll = true;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1548, 597);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.button30);
+            this.Controls.Add(this.button20);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "화장품 생산 관리 프로그램";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,8 +222,10 @@
         private System.Windows.Forms.ToolStripLabel ToolStrip3;
         private System.Windows.Forms.ToolStripLabel ToolStrip4;
         private System.Windows.Forms.ToolStripLabel ToolStrip0;
+        private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
-

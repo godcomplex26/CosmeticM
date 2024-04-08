@@ -46,7 +46,7 @@ namespace CosmeticM
             {
                 charts.Add(new Chart());
             }
-            button1.Location = new Point(form7.getLocationX() +12 , form7.getLocationY() +20);
+            //button1.Location = new Point(form7.getLocationX() +12 , form7.getLocationY() +20);
             DrawCharts(charts);
 
         }
@@ -57,7 +57,9 @@ namespace CosmeticM
             form7.FormBorderStyle = FormBorderStyle.None;
             form7.Dock = DockStyle.Fill;
 
-            this.Controls.Add(form7);
+            tableLayoutPanel1.Controls.Add(form7, 0, 0);
+            form7.submitButton().Click += button1_Click;
+            form7.setDataType("QData");
             form7.Show();
             //groupBox2.Size = new Size(form7.getGroupBox().Width, form7.Height);
         }

@@ -28,274 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.plotView1 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView2 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView3 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView4 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView5 = new OxyPlot.WindowsForms.PlotView();
-            this.plotView6 = new OxyPlot.WindowsForms.PlotView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // plotView1
+            // tableLayoutPanel1
             // 
-            this.plotView1.Location = new System.Drawing.Point(12, 150);
-            this.plotView1.Name = "plotView1";
-            this.plotView1.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView1.Size = new System.Drawing.Size(369, 138);
-            this.plotView1.TabIndex = 0;
-            this.plotView1.Text = "plotView1";
-            this.plotView1.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView1.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1022, 598);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // plotView2
+            // groupBox1
             // 
-            this.plotView2.Location = new System.Drawing.Point(419, 150);
-            this.plotView2.Name = "plotView2";
-            this.plotView2.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView2.Size = new System.Drawing.Size(369, 138);
-            this.plotView2.TabIndex = 1;
-            this.plotView2.Text = "plotView2";
-            this.plotView2.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView2.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView2.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 183);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1016, 412);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "그래프";
             // 
-            // plotView3
+            // panel1
             // 
-            this.plotView3.Location = new System.Drawing.Point(12, 294);
-            this.plotView3.Name = "plotView3";
-            this.plotView3.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView3.Size = new System.Drawing.Size(369, 138);
-            this.plotView3.TabIndex = 2;
-            this.plotView3.Text = "plotView3";
-            this.plotView3.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView3.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView3.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // plotView4
-            // 
-            this.plotView4.Location = new System.Drawing.Point(419, 294);
-            this.plotView4.Name = "plotView4";
-            this.plotView4.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView4.Size = new System.Drawing.Size(369, 138);
-            this.plotView4.TabIndex = 3;
-            this.plotView4.Text = "plotView4";
-            this.plotView4.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView4.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView4.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // plotView5
-            // 
-            this.plotView5.Location = new System.Drawing.Point(12, 438);
-            this.plotView5.Name = "plotView5";
-            this.plotView5.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView5.Size = new System.Drawing.Size(369, 138);
-            this.plotView5.TabIndex = 4;
-            this.plotView5.Text = "plotView5";
-            this.plotView5.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView5.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView5.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // plotView6
-            // 
-            this.plotView6.Location = new System.Drawing.Point(419, 438);
-            this.plotView6.Name = "plotView6";
-            this.plotView6.PanCursor = System.Windows.Forms.Cursors.Hand;
-            this.plotView6.Size = new System.Drawing.Size(369, 138);
-            this.plotView6.TabIndex = 5;
-            this.plotView6.Text = "plotView6";
-            this.plotView6.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
-            this.plotView6.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
-            this.plotView6.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(713, 112);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "조회하기";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.button8);
-            this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Controls.Add(this.listBox3);
-            this.groupBox4.Controls.Add(this.button6);
-            this.groupBox4.Controls.Add(this.listBox1);
-            this.groupBox4.Controls.Add(this.button3);
-            this.groupBox4.Controls.Add(this.listBox2);
-            this.groupBox4.Controls.Add(this.textBox4);
-            this.groupBox4.Controls.Add(this.button2);
-            this.groupBox4.Location = new System.Drawing.Point(12, 12);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(776, 94);
-            this.groupBox4.TabIndex = 27;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "조건 설정";
-            // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(623, 50);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(96, 23);
-            this.button8.TabIndex = 26;
-            this.button8.Text = "조건전체삭제";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(183, 48);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 25;
-            this.button7.Text = "OR";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // listBox3
-            // 
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 12;
-            this.listBox3.Location = new System.Drawing.Point(10, 20);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(165, 52);
-            this.listBox3.TabIndex = 21;
-            this.listBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox3_KeyDown);
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(183, 20);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 24;
-            this.button6.Text = "AND";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(264, 20);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(120, 52);
-            this.listBox1.TabIndex = 17;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(517, 48);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(99, 23);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "날짜입력";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 12;
-            this.listBox2.Location = new System.Drawing.Point(390, 20);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 52);
-            this.listBox2.TabIndex = 18;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(516, 20);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 21);
-            this.textBox4.TabIndex = 22;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(622, 20);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(97, 23);
-            this.button2.TabIndex = 20;
-            this.button2.Text = "조건추가";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // chart1
-            // 
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
-            this.chart1.Location = new System.Drawing.Point(13, 140);
-            this.chart1.Name = "chart1";
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart1.Series.Add(series2);
-            this.chart1.Size = new System.Drawing.Size(524, 300);
-            this.chart1.TabIndex = 28;
-            this.chart1.Text = "chart1";
+            this.panel1.AutoScroll = true;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 17);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1010, 392);
+            this.panel1.TabIndex = 0;
             // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 598);
-            this.Controls.Add(this.chart1);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.plotView6);
-            this.Controls.Add(this.plotView5);
-            this.Controls.Add(this.plotView4);
-            this.Controls.Add(this.plotView3);
-            this.Controls.Add(this.plotView2);
-            this.Controls.Add(this.plotView1);
+            this.ClientSize = new System.Drawing.Size(1022, 598);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form4";
             this.Text = "Form4";
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private OxyPlot.WindowsForms.PlotView plotView1;
-        private OxyPlot.WindowsForms.PlotView plotView2;
-        private OxyPlot.WindowsForms.PlotView plotView3;
-        private OxyPlot.WindowsForms.PlotView plotView4;
-        private OxyPlot.WindowsForms.PlotView plotView5;
-        private OxyPlot.WindowsForms.PlotView plotView6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.ListBox listBox3;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Panel panel1;
     }
 }

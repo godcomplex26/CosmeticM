@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button10 = new System.Windows.Forms.Button();
@@ -36,22 +37,19 @@
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.button10);
@@ -59,7 +57,6 @@
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Controls.Add(this.tabControl1);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.listBox3);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -71,6 +68,15 @@
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "데이터 조회";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(7, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 23);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "조회하기";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -142,47 +148,6 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(430, 17);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(132, 117);
-            this.tabControl1.TabIndex = 27;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.listBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(124, 91);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(124, 88);
-            this.listBox1.TabIndex = 17;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(124, 91);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(605, 66);
@@ -229,6 +194,13 @@
             this.listBox2.Size = new System.Drawing.Size(120, 88);
             this.listBox2.TabIndex = 18;
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(430, 20);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(132, 137);
+            this.panel1.TabIndex = 33;
+            // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -239,8 +211,6 @@
             this.Text = "Form7";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -255,14 +225,14 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
