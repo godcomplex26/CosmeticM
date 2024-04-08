@@ -67,7 +67,7 @@
             this.groupBox1.Controls.Add(this.listBox2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1010, 144);
+            this.groupBox1.Size = new System.Drawing.Size(1010, 163);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "데이터 조회";
@@ -233,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 269);
+            this.ClientSize = new System.Drawing.Size(1034, 187);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form7";
             this.Text = "Form7";

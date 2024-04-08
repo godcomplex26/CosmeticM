@@ -17,7 +17,6 @@ namespace CosmeticM
     {
         //DataGridView dataGridView1;
         //DataGridView dataGridView2;
-        public MonthCalendar calendar1 = new MonthCalendar();
         public List<string> conditions = new List<string>();
 
         public Form7()
@@ -134,10 +133,10 @@ namespace CosmeticM
         public void button3_Click(object sender, EventArgs e) // 날짜 입력
         {
             Point buttonLocation = button3.PointToScreen(this.PointToScreen(Point.Empty));
+            MonthCalendar calendar1 = new MonthCalendar();
 
-
-            // MonthCalendar의 속성 설정
-            calendar1.Location = new Point(button3.Location.X, button3.Location.Y + 60);
+        // MonthCalendar의 속성 설정
+            calendar1.Location = new Point(button3.Location.X, 0);
             calendar1.ShowToday = true;
             calendar1.ShowTodayCircle = true;
 
@@ -255,9 +254,24 @@ namespace CosmeticM
             }
         }
 
-        public TabControl getTab()
+        public Control getTab()
         {
             return tabControl1;
+        }
+
+        public Control getGroupBox() 
+        {
+            return groupBox1;
+        }
+
+        public int getLocationX()
+        {
+            return groupBox1.Location.X;
+        }
+
+        public int getLocationY()
+        {
+            return groupBox1.Location.Y;
         }
 
         Dictionary<string, string> operatorDict = new Dictionary<string, string>
