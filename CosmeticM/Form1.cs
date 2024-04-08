@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace CosmeticM
 {
@@ -125,9 +126,12 @@ namespace CosmeticM
             // label1.Text = "현재 선택 : ";
             Utils.reScreen(dataGridView1, dataGridView2);
 
+            groupBox1.Controls.Remove(button5);
+            tabPage1.Text = "PData";
+            tabPage2.Text = "QData";
+
             listBox1.Items.AddRange(Utils.pdata);
-            listBox1.Items.AddRange(Utils.qdata);
-            listBox2.Items.AddRange(Utils.operators);
+            listBox2.Items.AddRange(operatorDict.Keys.ToArray());
 
         }
 
@@ -305,40 +309,43 @@ namespace CosmeticM
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string column = listBox1.SelectedItem.ToString();
-            string op = listBox2.SelectedItem.ToString();
-            string val = textBox4.Text;
-            
-            if (op.Equals("LIKE"))
-                val += "%";
-            if (column.Equals("datetime") || column.Equals("date"))
-                val = $"'{val}'";
-                
-            string condition = $"{column} {op} {val}";
-            if (IsValidWhereClause(condition))
+            if (!textBox4.Text.Equals("") && listBox1.SelectedItem != null && listBox2.SelectedItem != null )
             {
-                if (conditions.Count != 0)
+                string column = listBox1.SelectedItem.ToString();
+                string op = operatorDict[listBox2.SelectedItem.ToString()];
+                string val = textBox4.Text;
+
+                if (op.Equals("LIKE"))
+                    val += "%";
+                if (column.Equals("datetime") || column.Equals("date"))
+                    val = $"'{val}'";
+
+                string condition = $"{column} {op} {val}";
+                if (IsValidWhereClause(condition))
                 {
-                    if (conditions.Last().ToString().Equals("AND") || conditions.Last().ToString().Equals("OR"))
+                    if (conditions.Count != 0)
                     {
-                        conditions.Add(condition);
+                        if (conditions.Last().ToString().Equals("AND") || conditions.Last().ToString().Equals("OR"))
+                        {
+                            conditions.Add(condition);
+                        }
+                        else
+                        {
+                            conditions.Add("AND");
+                            conditions.Add(condition);
+                        }
                     }
                     else
                     {
-                        conditions.Add("AND");
                         conditions.Add(condition);
                     }
                 }
                 else
                 {
-                    conditions.Add(condition);
+                    MessageBox.Show("조건 구성이 올바르지 않습니다.");
                 }
+                textBox4.Clear();
             }
-            else
-            {
-                MessageBox.Show("조건 구성이 올바르지 않습니다.");
-            }
-            textBox4.Clear();
             condListRefresher();
         }
 
@@ -383,20 +390,16 @@ namespace CosmeticM
 
         private void button3_Click(object sender, EventArgs e) // 날짜 입력
         {
-            Point buttonLocation = button6.PointToScreen(Point.Empty);
-            int x = buttonLocation.X;
-            int y = buttonLocation.Y;
+            Point buttonLocation = button3.PointToScreen(this.PointToScreen(Point.Empty));
 
-            // MonthCalendar 컨트롤 생성
-            MonthCalendar calendar = new MonthCalendar();
 
             // MonthCalendar의 속성 설정
-            calendar.Location = new Point(buttonLocation.X, buttonLocation.Y);
-            calendar.ShowToday = true;
-            calendar.ShowTodayCircle = true;
+            calendar1.Location = new Point(button3.Location.X, button3.Location.Y + 60);
+            calendar1.ShowToday = true;
+            calendar1.ShowTodayCircle = true;
 
             // MonthCalendar의 DateSelected 이벤트 처리
-            calendar.DateSelected += (s, args) =>
+            calendar1.DateSelected += (s, args) =>
             {
                 // 선택한 날짜를 yyyy-MM-dd 형식으로 가져오기
                 string selectedDate = args.Start.ToString("yyyy-MM-dd");
@@ -405,14 +408,35 @@ namespace CosmeticM
                 textBox4.Text = selectedDate;
 
                 // MonthCalendar 제거
-                this.Controls.Remove(calendar);
+                Controls.Remove(calendar1);
             };
+            calendar1.KeyDown += (s, args) =>
+            {
+                if (args.KeyCode == Keys.Escape)
+                {
+                    Controls.Remove(calendar1);
+                }
+            };
+            
+
+            System.Windows.Forms.Button xbutton = new System.Windows.Forms.Button();
+            xbutton.Text = "x";
+            xbutton.BackColor = Color.Transparent;
+            xbutton.FlatStyle = FlatStyle.Flat;
+            xbutton.Size = new System.Drawing.Size(20, 20);
+            xbutton.Location = new Point(calendar1.Width+20, calendar1.Height - 14);
+            xbutton.Click += (s, args) =>
+            {
+                Controls.Remove(calendar1);
+            };
+            calendar1.Controls.Add(xbutton);
 
             // MonthCalendar를 폼에 추가
-            this.Controls.Add(calendar);
+            this.Controls.Add(calendar1);
 
             // MonthCalendar를 맨 위로 가져오기
-            calendar.BringToFront();
+            calendar1.BringToFront();
+            calendar1.Focus();
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -434,5 +458,73 @@ namespace CosmeticM
             }
             condListRefresher();
         }
+        
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 0)
+            {
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(Utils.pdata);
+                groupBox1.Controls.Add(button1);
+                groupBox1.Controls.Remove(button5);
+                tabPage1.Controls.Add(listBox1);
+                conditions.Clear();
+                condListRefresher();
+            }
+            else
+            {
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(Utils.qdata);
+                groupBox1.Controls.Add(button5);
+                groupBox1.Controls.Remove(button1);
+                tabPage2.Controls.Add(listBox1);
+                conditions.Clear();
+                condListRefresher();
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (listBox3.SelectedIndex > 0 )
+            {
+                string temp;
+                temp = conditions[listBox3.SelectedIndex];
+                conditions[listBox3.SelectedIndex] = conditions[listBox3.SelectedIndex - 1];
+                conditions[listBox3.SelectedIndex - 1] = temp;
+                int afterindex = listBox3.SelectedIndex - 1;
+                condListRefresher();
+                listBox3.SelectedIndex = afterindex;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (listBox3.SelectedIndex >= 0 && listBox3.SelectedIndex < conditions.Count-1)
+            {
+                string temp;
+                temp = conditions[listBox3.SelectedIndex];
+                conditions[listBox3.SelectedIndex] = conditions[listBox3.SelectedIndex + 1];
+                conditions[listBox3.SelectedIndex + 1] = temp;
+                int afterindex = listBox3.SelectedIndex + 1;
+                condListRefresher();
+                listBox3.SelectedIndex = afterindex;
+            }
+        }
+
+        Dictionary<string, string> operatorDict = new Dictionary<string, string>
+        {
+            {"정확히 일치", "="},
+            {"같거나 비슷함", "LIKE"},
+            {"큼", ">"},
+            {"크거나 같음", ">="},
+            {"작음", "<"},
+            {"작거나 같음", "<="}
+        };
+
+        //private void checkDatas()
+        //{
+        //    if (conditions.)
+        //}
     }
 }

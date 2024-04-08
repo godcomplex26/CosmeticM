@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OxyPlot.WindowsForms;
 using System.Text.RegularExpressions;
+using System.Windows.Forms.DataVisualization.Charting;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace CosmeticM
 {
@@ -37,13 +39,32 @@ namespace CosmeticM
         public Form4()
         {
             InitializeComponent();
-            listBox1.Items.AddRange(Utils.pdata);
-            listBox2.Items.AddRange(Utils.operators);
+            //new Form7();
+            //listBox1.Items.AddRange(Utils.pdata);
+            //listBox2.Items.AddRange(Utils.operators);
 
             DataManager.LoadP();
             // datetime between '2022-04-02' and '2022-04-09'
             loadCharts();
+            DrawChart(chart1, "ReactA_Temp");
+
+            //Form7 form7 = new Form7();
+            //panel1.Controls.Add(form7);
+
         }
+
+        //private void LoadFormControlsIntoPanel()
+        //{
+        //    Form7 form7 = new Form7();
+
+        //    // 폼의 컨트롤을 패널에 추가
+        //    while (form7.Controls.Count > 0)
+        //    {
+        //        Control control = form7.Controls[0];
+        //        form7.Controls.RemoveAt(0);
+        //        panel1.Controls.Add(control);
+        //    }
+        //}
 
         private PlotModel DrawGraph(string column)
         {
@@ -61,7 +82,7 @@ namespace CosmeticM
                 foreach ( var data in DataManager.datasP)
                 {
                     series.Points.Add(
-                        new DataPoint(
+                        new OxyPlot.DataPoint(
                             DateTimeAxis.ToDouble(data.datetime),
                             Convert.ToDouble(data.GetType().GetProperty(column).GetValue(data))
                             ));
@@ -75,7 +96,7 @@ namespace CosmeticM
             {
                 Position = AxisPosition.Bottom,
                 Title = "Date",
-                IntervalType = DateTimeIntervalType.Days,
+                IntervalType = OxyPlot.Axes.DateTimeIntervalType.Days,
                 StringFormat = "yyyy-MM-dd"
             };
             model.Axes.Add(dateTimeAxis);
@@ -239,6 +260,17 @@ namespace CosmeticM
                 }
             }
             condListRefresher();
+        }
+        private void DrawChart(Chart chart, string column)
+        {
+            if (DataManager.datasP.Count > 0)
+            {
+                foreach (var data in DataManager.datasP)
+                {
+                    chart.Series["Series1"].Points.AddXY(data.datetime,
+                            Convert.ToDouble(data.GetType().GetProperty(column).GetValue(data)));
+                }
+            }
         }
     }
 }

@@ -74,11 +74,11 @@ namespace CosmeticM
                 DataManager.LoadQ();
             }
 
-            if (data.Equals("PData") && DataManager.datasP.Count > 0)
+            if (data.Equals("PData"))
             {
                 dgv.DataSource = DataManager.datasP;
             }
-            if (data.Equals("QData") && DataManager.datasQ.Count > 0)
+            if (data.Equals("QData"))
             {
                 dgv.DataSource = DataManager.datasQ;
             }
@@ -92,12 +92,9 @@ namespace CosmeticM
             dgv2.DataSource = null;
             DataManager.LoadP();
             DataManager.LoadQ();
-            if (DataManager.datasP.Count > 0 && DataManager.datasQ.Count > 0)
-            {
-                dgv1.DataSource = DataManager.datasP;
-                dgv2.DataSource = DataManager.datasQ;
-                Format(dgv1, dgv2);
-            }
+            dgv1.DataSource = DataManager.datasP;
+            dgv2.DataSource = DataManager.datasQ;
+            Format(dgv1, dgv2);
         }
 
         // 화면 리프레시 - 조건
@@ -113,11 +110,11 @@ namespace CosmeticM
                 DataManager.LoadQ(sql);
             }
 
-            if (data.Equals("PData") && DataManager.datasP.Count > 0)
+            if (data.Equals("PData"))
             {
                 dgv.DataSource = DataManager.datasP;
             }
-            if (data.Equals("QData") && DataManager.datasQ.Count > 0)
+            if (data.Equals("QData"))
             {
                 dgv.DataSource = DataManager.datasQ;
             }
