@@ -17,14 +17,28 @@ namespace CosmeticM
     public partial class Form2 : Form
     {
         List<string> errors = new List<string>();
+        Form7 form7 = new Form7();
 
         public Form2()
         {
             InitializeComponent();
+            ShowForm7AsChildForm();
             textBox1.Enabled = false;
             progressBar1.Style = ProgressBarStyle.Marquee; // Marquee 스타일은 애니메이션 형태의 로딩바입니다.
             progressBar1.MarqueeAnimationSpeed = 30; // 로딩바의 애니메이션 속도를 조절합니다.
             Utils.reScreen(dataGridView1, "PData", Form1.digit, progressBar1);
+        }
+
+        private void ShowForm7AsChildForm()
+        {
+            form7.TopLevel = false;
+            form7.FormBorderStyle = FormBorderStyle.None;
+            form7.Dock = DockStyle.Fill;
+
+            panel1.Controls.Add(form7);
+            //form7.submitButton().Click += button1_Click;
+            form7.setDataType("PData");
+            form7.Show();
         }
 
         string select;

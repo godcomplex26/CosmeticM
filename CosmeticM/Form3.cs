@@ -17,6 +17,7 @@ namespace CosmeticM
     {
         List<string> errors = new List<string>();
         string placeholderText = "ex. 2024-01-01";
+        Form7 form7 = new Form7();
         public Form3()
         {
             InitializeComponent();
@@ -27,6 +28,17 @@ namespace CosmeticM
             Utils.reScreen(dataGridView1, "QData", Form1.digit, progressBar1);
             placeholder.Text = placeholderText;
             placeholder.Enabled = false;
+        }
+        private void ShowForm7AsChildForm()
+        {
+            form7.TopLevel = false;
+            form7.FormBorderStyle = FormBorderStyle.None;
+            form7.Dock = DockStyle.Fill;
+
+            tableLayoutPanel1.Controls.Add(form7, 0 , 0);
+            //form7.submitButton().Click += button1_Click;
+            form7.setDataType("PData");
+            form7.Show();
         }
 
         // 글자 입력되면 플레이스홀더 제거
