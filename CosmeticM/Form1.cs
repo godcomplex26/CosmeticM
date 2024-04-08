@@ -19,7 +19,6 @@ namespace CosmeticM
 {
     public partial class Form1 : Form
     {
-        MonthCalendar calendar1 = new MonthCalendar();
         
         /*        
                  // 데이터 표시 포맷, 시간은 초까지, 소수점은 두 자리까지
@@ -107,7 +106,7 @@ namespace CosmeticM
                 }
         */
         // 조건 초기화
-        private List<string> conditions = new List<string>();
+        Form7 form7 = new Form7();
         public void resetCon()
         {
             Utils.reScreen(dataGridView1, dataGridView2);
@@ -122,50 +121,61 @@ namespace CosmeticM
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // 열 너비 맞춤
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // 가운데 정렬
             */
-
+            ShowForm7AsChildForm();
             // label1.Text = "현재 선택 : ";
             Utils.reScreen(dataGridView1, dataGridView2);
 
-            groupBox1.Controls.Remove(button5);
-            tabPage1.Text = "PData";
-            tabPage2.Text = "QData";
+            //groupBox1.Controls.Remove(button5);
+            //tabPage1.Text = "PData";
+            //tabPage2.Text = "QData";
 
-            listBox1.Items.AddRange(Utils.pdata);
-            listBox2.Items.AddRange(operatorDict.Keys.ToArray());
+            //listBox1.Items.AddRange(Utils.pdata);
+            button1.Location = new Point(form7.getLocationX() + 12, form7.getLocationY() + 20);
 
+        }
+
+        private void ShowForm7AsChildForm()
+        {
+            form7.TopLevel = false;
+            form7.FormBorderStyle = FormBorderStyle.None;
+            form7.Dock = DockStyle.Fill;
+
+            panel1.Controls.Add(form7);
+            form7.Show();
+            //groupBox2.Size = new Size(form7.getGroupBox().Width, form7.Height);
         }
 
         // PData 데이터 조회
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string sql;
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    string sql;
 
-            finalQueryGen();
+        //    finalQueryGen();
 
-            sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
+        //    sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
 
-            if (conditions.Count == 0)
-            {
-                sql = "-1";
-            }
+        //    if (conditions.Count == 0)
+        //    {
+        //        sql = "-1";
+        //    }
 
-            Utils.reScreen(dataGridView1, "PData", sql);
-        }
+        //    Utils.reScreen(dataGridView1, "PData", sql);
+        //}
 
         // QData 데이터 조회
-        private void button5_Click(object sender, EventArgs e)
-        {
-            string sql;
-            finalQueryGen();
-            sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
+        //private void button5_Click(object sender, EventArgs e)
+        //{
+        //    string sql;
+        //    finalQueryGen();
+        //    sql = Utils.sqlQueryConverter(string.Join(" ", conditions));
 
-            if (conditions.Count == 0)
-            {
-                sql = "-1";
-            }
+        //    if (conditions.Count == 0)
+        //    {
+        //        sql = "-1";
+        //    }
 
-            Utils.reScreen(dataGridView2, "QData", sql);
-        }
+        //    Utils.reScreen(dataGridView2, "QData", sql);
+        //}
         /*
                 // 셀 선택 시 할당되는 값
                 string select = "";
@@ -238,11 +248,11 @@ namespace CosmeticM
         */
 
         // 조건 초기화
-        private void button4_Click(object sender, EventArgs e)
-        {
-            resetCon();
-            button1_Click(sender, e);
-        }
+        //private void button4_Click(object sender, EventArgs e)
+        //{
+        //    resetCon();
+        //    button1_Click(sender, e);
+        //}
 
         // 공정 데이터 관리
         private void ToolStrip1_Click(object sender, EventArgs e)
@@ -277,6 +287,27 @@ namespace CosmeticM
             Utils.reScreen(dataGridView1, dataGridView2);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("test");
+            if (form7.conditions.Count == 0)
+            {
+                Utils.reScreen(dataGridView1, dataGridView2);
+            }
+            else
+            {
+                form7.finalQueryGen();
+                if (form7.getCurrentTab().Equals("PData"))
+                {
+                    Utils.reScreen(dataGridView1, form7.getCurrentTab(), string.Join(" ", form7.conditions));
+                }
+                else if (form7.getCurrentTab().Equals("QData"))
+                {
+                    Utils.reScreen(dataGridView2, form7.getCurrentTab(), string.Join(" ", form7.conditions));
+                }
+            }
+        }
+
         //private void listBox1_DoubleClick(object sender, EventArgs e)
         //{
         //    if (listBox1.SelectedItem != null)
@@ -307,224 +338,45 @@ namespace CosmeticM
         //    }
         //}
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (!textBox4.Text.Equals("") && listBox1.SelectedItem != null && listBox2.SelectedItem != null )
-            {
-                string column = listBox1.SelectedItem.ToString();
-                string op = operatorDict[listBox2.SelectedItem.ToString()];
-                string val = textBox4.Text;
 
-                if (op.Equals("LIKE"))
-                    val += "%";
-                if (column.Equals("datetime") || column.Equals("date"))
-                    val = $"'{val}'";
-
-                string condition = $"{column} {op} {val}";
-                if (IsValidWhereClause(condition))
-                {
-                    if (conditions.Count != 0)
-                    {
-                        if (conditions.Last().ToString().Equals("AND") || conditions.Last().ToString().Equals("OR"))
-                        {
-                            conditions.Add(condition);
-                        }
-                        else
-                        {
-                            conditions.Add("AND");
-                            conditions.Add(condition);
-                        }
-                    }
-                    else
-                    {
-                        conditions.Add(condition);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("조건 구성이 올바르지 않습니다.");
-                }
-                textBox4.Clear();
-            }
-            condListRefresher();
-        }
-
-        public bool IsValidWhereClause(string whereClause)
-        {
-            string pattern = @"^(?:\s*\w+\s*(?:=|<>|>|<|>=|<=|LIKE|BETWEEN)\s*(?:'[^']*'|[\w\d%_\-\.]+(?:\.\d+)?)(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?\s*(?:AND|OR)?\s*)*$";
-            return Regex.IsMatch(whereClause, pattern, RegexOptions.IgnoreCase);
-        }
-
-        private void condListRefresher()
-        {
-            listBox3.Items.Clear();
-            listBox3.Items.AddRange(conditions.ToArray());
-        }
-
-        private void listBox3_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (listBox3.SelectedItem != null)
-                {
-                    string selectedItem = listBox3.SelectedItem.ToString();
-                    conditions.Remove(selectedItem);
-                    condListRefresher();
-                }
-            }
-        }
-
-        private void button6_Click(object sender, EventArgs e) // AND
-        {
-            if (conditions.Count != 0)
-                conditions.Add("AND");
-            condListRefresher();
-        }
-
-        private void button7_Click(object sender, EventArgs e) // OR
-        {
-            if (conditions.Count != 0)
-                conditions.Add("OR");
-            condListRefresher();
-        }
-
-        private void button3_Click(object sender, EventArgs e) // 날짜 입력
-        {
-            Point buttonLocation = button3.PointToScreen(this.PointToScreen(Point.Empty));
-
-
-            // MonthCalendar의 속성 설정
-            calendar1.Location = new Point(button3.Location.X, button3.Location.Y + 60);
-            calendar1.ShowToday = true;
-            calendar1.ShowTodayCircle = true;
-
-            // MonthCalendar의 DateSelected 이벤트 처리
-            calendar1.DateSelected += (s, args) =>
-            {
-                // 선택한 날짜를 yyyy-MM-dd 형식으로 가져오기
-                string selectedDate = args.Start.ToString("yyyy-MM-dd");
-
-                // 선택한 날짜를 TextBox에 추가
-                textBox4.Text = selectedDate;
-
-                // MonthCalendar 제거
-                Controls.Remove(calendar1);
-            };
-            calendar1.KeyDown += (s, args) =>
-            {
-                if (args.KeyCode == Keys.Escape)
-                {
-                    Controls.Remove(calendar1);
-                }
-            };
-            
-
-            System.Windows.Forms.Button xbutton = new System.Windows.Forms.Button();
-            xbutton.Text = "x";
-            xbutton.BackColor = Color.Transparent;
-            xbutton.FlatStyle = FlatStyle.Flat;
-            xbutton.Size = new System.Drawing.Size(20, 20);
-            xbutton.Location = new Point(calendar1.Width+20, calendar1.Height - 14);
-            xbutton.Click += (s, args) =>
-            {
-                Controls.Remove(calendar1);
-            };
-            calendar1.Controls.Add(xbutton);
-
-            // MonthCalendar를 폼에 추가
-            this.Controls.Add(calendar1);
-
-            // MonthCalendar를 맨 위로 가져오기
-            calendar1.BringToFront();
-            calendar1.Focus();
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            conditions.Clear();
-            condListRefresher();
-        }
-
-        private void finalQueryGen()
-        {
-            int len = conditions.Count();
-            
-            if (len != 0)
-            {
-                if (conditions[len - 1].Equals("AND") || conditions[len - 1].Equals("OR"))
-                {
-                    conditions.RemoveAt(len - 1);
-                }
-            }
-            condListRefresher();
-        }
-        
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedIndex == 0)
-            {
-                listBox1.Items.Clear();
-                listBox1.Items.AddRange(Utils.pdata);
-                groupBox1.Controls.Add(button1);
-                groupBox1.Controls.Remove(button5);
-                tabPage1.Controls.Add(listBox1);
-                conditions.Clear();
-                condListRefresher();
-            }
-            else
-            {
-                listBox1.Items.Clear();
-                listBox1.Items.AddRange(Utils.qdata);
-                groupBox1.Controls.Add(button5);
-                groupBox1.Controls.Remove(button1);
-                tabPage2.Controls.Add(listBox1);
-                conditions.Clear();
-                condListRefresher();
-            }
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            if (listBox3.SelectedIndex > 0 )
-            {
-                string temp;
-                temp = conditions[listBox3.SelectedIndex];
-                conditions[listBox3.SelectedIndex] = conditions[listBox3.SelectedIndex - 1];
-                conditions[listBox3.SelectedIndex - 1] = temp;
-                int afterindex = listBox3.SelectedIndex - 1;
-                condListRefresher();
-                listBox3.SelectedIndex = afterindex;
-            }
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            if (listBox3.SelectedIndex >= 0 && listBox3.SelectedIndex < conditions.Count-1)
-            {
-                string temp;
-                temp = conditions[listBox3.SelectedIndex];
-                conditions[listBox3.SelectedIndex] = conditions[listBox3.SelectedIndex + 1];
-                conditions[listBox3.SelectedIndex + 1] = temp;
-                int afterindex = listBox3.SelectedIndex + 1;
-                condListRefresher();
-                listBox3.SelectedIndex = afterindex;
-            }
-        }
-
-        Dictionary<string, string> operatorDict = new Dictionary<string, string>
-        {
-            {"정확히 일치", "="},
-            {"같거나 비슷함", "LIKE"},
-            {"큼", ">"},
-            {"크거나 같음", ">="},
-            {"작음", "<"},
-            {"작거나 같음", "<="}
-        };
-
-        //private void checkDatas()
+        //public bool IsValidWhereClause(string whereClause)
         //{
-        //    if (conditions.)
+        //    string pattern = @"^(?:\s*\w+\s*(?:=|<>|>|<|>=|<=|LIKE|BETWEEN)\s*(?:'[^']*'|[\w\d%_\-\.]+(?:\.\d+)?)(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?(?:\s*AND\s*(?:'[\w\d%_\-\.]+(?:\.\d+)?'))?(?:\s*ESCAPE\s*'\w')?\s*(?:AND|OR)?\s*)*$";
+        //    return Regex.IsMatch(whereClause, pattern, RegexOptions.IgnoreCase);
         //}
+
+        //private void condListRefresher()
+        //{
+        //    listBox3.Items.Clear();
+        //    listBox3.Items.AddRange(conditions.ToArray());
+        //}
+
+        //private void listBox3_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Delete)
+        //    {
+        //        if (listBox3.SelectedItem != null)
+        //        {
+        //            string selectedItem = listBox3.SelectedItem.ToString();
+        //            conditions.Remove(selectedItem);
+        //            condListRefresher();
+        //        }
+        //    }
+        //}
+
+        //private void button6_Click(object sender, EventArgs e) // AND
+        //{
+        //    if (conditions.Count != 0)
+        //        conditions.Add("AND");
+        //    condListRefresher();
+        //}
+
+        //private void button7_Click(object sender, EventArgs e) // OR
+        //{
+        //    if (conditions.Count != 0)
+        //        conditions.Add("OR");
+        //    condListRefresher();
+        //}
+
     }
 }
