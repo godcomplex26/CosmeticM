@@ -44,11 +44,13 @@
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.textBox4);
@@ -64,9 +66,10 @@
             this.groupBox1.Controls.Add(this.listBox3);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.listBox2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(785, 163);
+            this.groupBox1.Size = new System.Drawing.Size(787, 167);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "데이터 조회";
@@ -127,14 +130,14 @@
             // 
             this.panel1.Location = new System.Drawing.Point(218, 26);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(132, 122);
+            this.panel1.Size = new System.Drawing.Size(132, 135);
             this.panel1.TabIndex = 33;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(672, 106);
+            this.button1.Location = new System.Drawing.Point(672, 135);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 42);
+            this.button1.Size = new System.Drawing.Size(97, 23);
             this.button1.TabIndex = 32;
             this.button1.Text = "조회하기";
             this.button1.UseVisualStyleBackColor = true;
@@ -187,7 +190,7 @@
             this.listBox3.ItemHeight = 12;
             this.listBox3.Location = new System.Drawing.Point(17, 48);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(165, 100);
+            this.listBox3.Size = new System.Drawing.Size(165, 112);
             this.listBox3.TabIndex = 21;
             this.listBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox3_KeyDown);
             // 
@@ -207,14 +210,24 @@
             this.listBox2.ItemHeight = 12;
             this.listBox2.Location = new System.Drawing.Point(546, 48);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(120, 100);
+            this.listBox2.Size = new System.Drawing.Size(120, 112);
             this.listBox2.TabIndex = 18;
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(672, 106);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(97, 23);
+            this.button4.TabIndex = 37;
+            this.button4.Text = "선택조건수정";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // Form7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 187);
+            this.ClientSize = new System.Drawing.Size(787, 167);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form7";
             this.Text = "Form7";
@@ -244,5 +257,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button4;
     }
 }

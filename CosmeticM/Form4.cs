@@ -13,8 +13,8 @@ using System.Windows.Forms;
 using OxyPlot.WindowsForms;
 using System.Text.RegularExpressions;
 using System.Windows.Forms.DataVisualization.Charting;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using System.Runtime.InteropServices;
+using CosmeticM;
 
 namespace CosmeticM
 {

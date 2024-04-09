@@ -36,7 +36,7 @@ namespace CosmeticM
             form7.FormBorderStyle = FormBorderStyle.None;
             form7.Dock = DockStyle.Fill;
 
-            tableLayoutPanel1.Controls.Add(form7, 0 , 0);
+            tableLayoutPanel1.Controls.Add(form7, 0, 0);
             form7.submitButton().Click += submit_Click;
             form7.setDataType("QData");
             form7.Show();

@@ -1,5 +1,4 @@
-﻿using CosmeticM;
-using OpenTK.Input;
+﻿using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,7 +35,6 @@ namespace CosmeticM
         public Form1()
         {
             InitializeComponent();
-            
 
             /* 너무 느려져서 기각
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // 열 너비 맞춤
