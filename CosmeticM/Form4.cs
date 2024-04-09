@@ -41,7 +41,6 @@ namespace CosmeticM
         public Form4()
         {
             InitializeComponent();
-            this.Size = new Size(form7.Size.Width, this.Size.Height);
             ShowForm7AsChildForm();
             DataManager.LoadP();
             for (int i = 0; i < Utils.pdata.Count(); i++)
