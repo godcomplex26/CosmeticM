@@ -36,9 +36,23 @@ namespace CosmeticM
             form7.Dock = DockStyle.Fill;
 
             panel1.Controls.Add(form7);
-            //form7.submitButton().Click += button1_Click;
+            form7.submitButton().Click += submit_Click;
             form7.setDataType("PData");
             form7.Show();
+        }
+
+        private void submit_Click(object sender, EventArgs e)
+        {
+            form7.finalQueryGen();
+
+            if (form7.conditions.Count == 0)
+            {
+                Utils.reScreen(dataGridView1, "PData", Form1.digit, progressBar1);
+            }
+            else
+            {
+                Utils.reScreen(dataGridView1, "PData", string.Join(" ", form7.conditions), Form1.digit, progressBar1);
+            }
         }
 
         string select;

@@ -29,7 +29,7 @@ namespace CosmeticM
             //this.Dock = DockStyle.Fill;
             //control.Controls.Add(this);
             //this.Show();
-
+            //groupBox1.Dock = DockStyle.Fill;
             panel1.Controls.Add(dataTypeTab);
             
             listBox2.Items.AddRange(operatorDict.Keys.ToArray());
@@ -53,6 +53,7 @@ namespace CosmeticM
         {
             if (!textBox4.Text.Equals("") && listBox1.SelectedItem != null && listBox2.SelectedItem != null)
             {
+                
                 string column = listBox1.SelectedItem.ToString();
                 string op = operatorDict[listBox2.SelectedItem.ToString()];
                 string val = textBox4.Text;
@@ -73,8 +74,13 @@ namespace CosmeticM
                         }
                         else
                         {
-                            conditions.Add("AND");
-                            conditions.Add(condition);
+                            string andor = "";
+                            if (conditions.Count != 0)
+                            {
+                                andor = selectAndOr();
+                            }
+                            //conditions.Add("AND");
+                            conditions.Add(andor + condition);
                         }
                     }
                     else
@@ -116,19 +122,59 @@ namespace CosmeticM
             }
         }
 
-        public void button6_Click(object sender, EventArgs e) // AND
+        public string selectAndOr()
         {
-            if (conditions.Count != 0)
-                conditions.Add("AND");
-            condListRefresher();
+            string result = "AND ";
+            Form andorForm = new Form();
+            andorForm.Size = new Size(200, 100);
+            andorForm.FormBorderStyle = FormBorderStyle.FixedDialog;
+            andorForm.MaximizeBox = false;
+            andorForm.MinimizeBox = false;
+            andorForm.StartPosition = FormStartPosition.CenterParent;
+            andorForm.Text = "Select AND OR";
+
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.Dock = DockStyle.Fill;
+            tableLayoutPanel.ColumnCount = 2;
+            tableLayoutPanel.RowCount = 1;
+            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            Button and = new Button();
+            Button or = new Button();
+            and.Margin = new Padding(10, 10, 5, 10);
+            or.Margin = new Padding(5, 10, 10, 10);
+            and.Dock = DockStyle.Fill;
+            or.Dock = DockStyle.Fill;
+            and.Text = "AND";
+            or.Text = "OR";
+
+            and.Click += (s, e) => { result = "AND "; andorForm.Close(); };
+            or.Click += (s, e) => { result = "OR "; andorForm.Close(); };
+
+            andorForm.Controls.Add(tableLayoutPanel);
+            tableLayoutPanel.Controls.Add(and, 0, 0);
+            tableLayoutPanel.Controls.Add(or, 1, 0);
+
+            andorForm.ShowDialog(this);
+            and.Focus();
+
+            return result;
         }
 
-        public void button7_Click(object sender, EventArgs e) // OR
-        {
-            if (conditions.Count != 0)
-                conditions.Add("OR");
-            condListRefresher();
-        }
+        //public void button6_Click(object sender, EventArgs e) // AND
+        //{
+        //    if (conditions.Count != 0)
+        //        conditions.Add("AND");
+        //    condListRefresher();
+        //}
+
+        //public void button7_Click(object sender, EventArgs e) // OR
+        //{
+        //    if (conditions.Count != 0)
+        //        conditions.Add("OR");
+        //    condListRefresher();
+        //}
 
         //public void button3_Click(object sender, EventArgs e) // 날짜 입력
         //{

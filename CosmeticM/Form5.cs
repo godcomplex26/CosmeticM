@@ -15,6 +15,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Data.Common;
 using ScottPlot.Statistics;
 using System.Globalization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace CosmeticM
 {
@@ -79,7 +80,17 @@ namespace CosmeticM
         private void button1_Click(object sender, EventArgs e)
         {
             form7.finalQueryGen();
-            DataManager.LoadQ(string.Join(" ", form7.conditions));
+            //DataManager.LoadQ(string.Join(" ", form7.conditions));
+            //loadCharts();
+
+            if (form7.conditions.Count == 0)
+            {
+                DataManager.LoadQ();
+            }
+            else
+            {
+                DataManager.LoadQ(string.Join(" ", form7.conditions));
+            }
             loadCharts();
         }
 

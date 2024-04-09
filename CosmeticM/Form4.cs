@@ -70,7 +70,17 @@ namespace CosmeticM
         private void button1_Click(object sender, EventArgs e)
         {
             form7.finalQueryGen();
-            DataManager.LoadP(string.Join(" ", form7.conditions));
+            //DataManager.LoadQ(string.Join(" ", form7.conditions));
+            //loadCharts();
+
+            if (form7.conditions.Count == 0)
+            {
+                DataManager.LoadP();
+            }
+            else
+            {
+                DataManager.LoadP(string.Join(" ", form7.conditions));
+            }
             loadCharts();
         }
 
