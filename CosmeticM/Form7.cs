@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Input;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -106,6 +107,13 @@ namespace CosmeticM
         public void condListRefresher()
         {
             listBox3.Items.Clear();
+            if (conditions.Count != 0)
+            {
+                if(conditions[0].Contains("AND "))
+                    conditions[0] = conditions[0].Replace("AND ", "");
+                if (conditions[0].Contains("OR "))
+                    conditions[0] = conditions[0].Replace("OR ", "");
+            }
             listBox3.Items.AddRange(conditions.ToArray());
         }
 
